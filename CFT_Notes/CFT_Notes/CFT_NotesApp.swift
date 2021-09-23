@@ -11,7 +11,8 @@ import SwiftUI
 struct CFT_NotesApp: App {
     var body: some Scene {
         WindowGroup {
-            MainAppView()
+			let noteVM = NoteViewModel()
+            MainAppView(noteVM: noteVM)
         }
     }
 }

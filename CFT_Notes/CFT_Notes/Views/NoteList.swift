@@ -11,14 +11,21 @@ struct NoteList: View {
 	var notes: [Note]
     var body: some View {
 		NavigationView {
-			List(notes) { note in
-				NavigationLink(destination: NoteDetail(content: note.content, note: note)) {
-					NoteRow(note: note)
+			List {
+				ForEach(notes) { note in
+					NavigationLink(destination: NoteDetail(content: note.content, note: note)) {
+						NoteRow(note: note)
+					}
 				}
+//				.onDelete(perform: delete)
 			}
 			.navigationTitle("Notes")
 		}
 	}
+	
+//	func delete(at offsets: IndexSet) {
+//		notes.remove(atOffsets: offsets)
+//	}
 }
 
 struct NoteList_Previews: PreviewProvider {
