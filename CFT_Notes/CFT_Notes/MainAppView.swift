@@ -9,8 +9,20 @@ import SwiftUI
 
 struct MainAppView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+		VStack {
+			HStack {
+				Spacer()
+				Button {
+					
+				} label: {
+					Image(systemName: "note.text.badge.plus")
+						.font(.largeTitle)
+				}
+				.padding(.horizontal)
+			}
+			Spacer()
+			Text("dsds")
+		}
     }
 }
 
