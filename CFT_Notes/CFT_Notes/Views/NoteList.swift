@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct NoteList: View {
+	var notes: [Note]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+		NavigationView {
+			List(notes) { note in
+				NavigationLink(destination: NoteDetail(content: note.content, note: note)) {
+					NoteRow(note: note)
+				}
+			}
+			.navigationTitle("Notes")
+		}
+	}
 }
 
 struct NoteList_Previews: PreviewProvider {
     static var previews: some View {
-        NoteList()
+		NoteList(notes: [Note(id: 1, title: "Test Note #1", description: "desc1", content: "It's a test note for this iOS App"),
+						 Note(id: 2, title: "Test Note #2", description: "desc2", content: "22222")])
     }
 }

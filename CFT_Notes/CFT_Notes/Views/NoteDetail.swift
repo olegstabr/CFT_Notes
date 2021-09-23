@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct NoteDetail: View {
+	@State var content: String
+	var note: Note
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		NavigationView {
+			VStack(alignment: .leading) {
+				Text(note.title)
+					.font(.title)
+					.fontWeight(.bold)
+				TextEditor(text: $content)
+			}
+			.padding(.horizontal)
+			.foregroundColor(.primary)
+		}
     }
 }
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NoteDetail()
+		NoteDetail(content: "", note: Note(id: 1, title: "TTTTT1", description: "dsadsadsd", content: "content CONNSADFNSANDFA"))
     }
 }
