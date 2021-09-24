@@ -26,6 +26,7 @@ struct MainAppView: View {
 			}
 			Spacer()
 			NoteList(notes: noteVM.notes)
+				.environmentObject(noteVM)
 		}
 		.onAppear {
 			noteVM.load()

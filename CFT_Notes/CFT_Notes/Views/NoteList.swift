@@ -8,24 +8,37 @@
 import SwiftUI
 
 struct NoteList: View {
-	var notes: [Note]
+	@State var notes: [Note] = []
+	@EnvironmentObject var noteVM: NoteViewModel
+	
     var body: some View {
 		NavigationView {
 			List {
-				ForEach(notes) { note in
+				ForEach(noteVM.notes) { note in
 					NavigationLink(destination: NoteDetail(content: note.content, note: note)) {
 						NoteRow(note: note)
 					}
 				}
-//				.onDelete(perform: delete)
+				.onDelete(perform: delete)
 			}
 			.navigationTitle("Notes")
 		}
+		.onAppear {
+			notes = noteVM.notes
+		}
 	}
 	
-//	func delete(at offsets: IndexSet) {
-//		notes.remove(atOffsets: offsets)
-//	}
+	func delete(at offsets: IndexSet) {
+		notes = noteVM.notes
+		notes.remove(atOffsets: offsets)
+		offsets.forEach { (i) in
+			noteVM.remove(at: i)
+		}
+	}
+	
+	func getNotes() {
+		
+	}
 }
 
 struct NoteList_Previews: PreviewProvider {

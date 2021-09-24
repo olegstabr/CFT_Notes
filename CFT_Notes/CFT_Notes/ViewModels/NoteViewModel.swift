@@ -24,12 +24,17 @@ class NoteViewModel: ObservableObject {
 		noteModel.add()
 	}
 	
+	func remove(_ note: Note) {
+		noteModel.remove(note)
+	}
+	
+	func remove(at index: Int) {
+		noteModel.remove(at: index)
+		save()
+	}
+	
 	func load() {
-		do {
-			try noteModel.load()
-		} catch {
-			print(error)
-		}
+		noteModel.load()
 	}
 	
 	func save() {

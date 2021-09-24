@@ -11,6 +11,7 @@ import CoreData
 
 struct NoteModel {
 	private(set) var notes: [Note]
+	private(set) var lastIndex: Int?
 	
 	mutating func update(_ note: Note) {
 		if let foundNoteIndex = notes.firstIndex(where: { $0.id == note.id }) {
@@ -19,14 +20,37 @@ struct NoteModel {
 	}
 	
 	mutating func add() {
-		let note = Note(id: notes.count, title: "New note #\(notes.count)", description: "Empty description", content: "Enter note text here...")
+		var maxNoteId = getLastIndex()
+		
+		if maxNoteId == -1 {
+			maxNoteId = 0
+		} else {
+			maxNoteId += 1
+		}
+		
+		let note = Note(id: maxNoteId, title: "New note #\(maxNoteId)", description: "Empty description", content: "Enter note text here...")
+		
 		notes.append(note)
+	}
+	
+	private func getLastIndex() -> Int {
+		let maxNoteId = notes.map({ $0.id }).max()
+		
+		if let maxNoteId = maxNoteId {
+			return maxNoteId
+		} else {
+			return -1
+		}
 	}
 	
 	mutating func remove(_ note: Note) {
 		if let noteIndex = notes.firstIndex(where: { $0.id == note.id }) {
 			notes.remove(at: noteIndex)
 		}
+	}
+	
+	mutating func remove(at index: Int) {
+		notes.remove(at: index)
 	}
 	
 	mutating func load() {
@@ -49,14 +73,6 @@ struct NoteModel {
 	}
 	
 	mutating func save() -> Bool {
-		// Transform array into data and save it into file
-//		do {
-//			let data = try JSONSerialization.data(withJSONObject: notes, options: [])
-//			try data.write(to: URL(fileURLWithPath: "notes_data.json"), options: [])
-//		} catch {
-//			print(error)
-//		}
-
 		do {
 			let fm = FileManager.default
 			let filename = "notes_data"
@@ -81,7 +97,7 @@ struct NoteModel {
 	}
 }
 
-struct Note: Identifiable, Equatable, Codable {
+struct Note: Identifiable, Equatable, Codable, Hashable {
 	var id: Int
 	var title: String
 	var description: String?
