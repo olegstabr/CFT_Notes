@@ -33,6 +33,12 @@ struct NoteModel {
 		notes.append(note)
 	}
 	
+	mutating func setContent(_ note: Note, content: String) {
+		if let foundNoteIndex = notes.firstIndex(where: { $0.id == note.id }) {
+			notes[foundNoteIndex].content = content
+		}
+	}
+	
 	private func getLastIndex() -> Int {
 		let maxNoteId = notes.map({ $0.id }).max()
 		

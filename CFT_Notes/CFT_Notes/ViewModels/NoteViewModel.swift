@@ -20,6 +20,10 @@ class NoteViewModel: ObservableObject {
 		noteModel.update(note)
 	}
 	
+	func setContent(note: Note, content: String) {
+		noteModel.setContent(note, content: content)
+	}
+	
 	func add() {
 		noteModel.add()
 	}
