@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoteDetail: View {
 	@State var content: String
+	@State private var fontWeight: Font.Weight = .light
 	@EnvironmentObject var noteVM: NoteViewModel
 	var note: Note
     var body: some View {
@@ -17,8 +18,37 @@ struct NoteDetail: View {
 				Text(note.title)
 					.font(.title)
 					.fontWeight(.bold)
-				TextEditor(text: $content)
-					.onTapGesture {	}
+				if #available(iOS 15.0, *) {
+					TextEditor(text: $content)
+						.font(.body.weight(fontWeight))
+						.toolbar(content: {
+							ToolbarItemGroup(placement: .keyboard) {
+								Button {
+									fontWeight = .bold
+								} label: {
+									Image(systemName: "bold")
+										.font(.title)
+								}
+								Button {
+								} label: {
+									Image(systemName: "italic")
+										.font(.title)
+								}
+								Button {
+									fontWeight = .bold
+								} label: {
+									Image(systemName: "underline")
+										.font(.title)
+								}
+								Spacer()
+							}
+					 })
+					 .onTapGesture { }
+				} else {
+					TextEditor(text: $content)
+						.onTapGesture {	}
+				}
+				
 			}
 			.padding(.horizontal)
 			.foregroundColor(.primary)
@@ -36,6 +66,7 @@ struct NoteDetail: View {
 	private func save() {
 		noteVM.setContent(note: note, content: content)
 		noteVM.save()
+		
 	}
 }
 
