@@ -8,19 +8,46 @@
 import SwiftUI
 struct NoteDetail: View {
 	@State var content: String
-	@State var attributedText = NSMutableAttributedString(string: "")
-	@State private var fontWeight: Font.Weight = .light
-	@State private var isBold = false
+	@State private var attributedText = NSMutableAttributedString(string: "")
+	@State private var font: UIFont? = .systemFont(ofSize: 32)
+	@State private var fontColor: UIColor? = .black
+	@State private var fontSize: CGFloat = 32
 	@EnvironmentObject var noteVM: NoteViewModel
 
 	var note: Note
     var body: some View {
 		NavigationView {
 			VStack {
-				TextView(text: $content, attributedText: $attributedText, allowsEditingTextAttributes: true, font: .systemFont(ofSize: 64))
+				TextView(text: $content, attributedText: $attributedText, font: $font, fontColor: $fontColor)
 					.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 					.padding(.horizontal)
 			}
+			.toolbar(content: {
+				ToolbarItemGroup(placement: .bottomBar) {
+					Button {
+						fontSize += 2
+						font = .systemFont(ofSize: fontSize)
+					} label: {
+						Image(systemName: "textformat.size.larger")
+							.font(.title)
+					}
+					Button {
+						fontSize -= 2
+						font = .systemFont(ofSize: fontSize)
+					} label: {
+						Image(systemName: "textformat.size.smaller")
+							.font(.title)
+					}
+					Button {
+						fontColor = .red
+					} label: {
+						Image(systemName: "paintbrush")
+							.font(.title)
+					}
+					Spacer()
+				}
+			})
+			.foregroundColor(.primary)
 			.navigationTitle(note.title)
 		}
 		.onTapGesture {
@@ -42,15 +69,15 @@ struct NoteDetail: View {
 struct TextView: UIViewRepresentable {
 	@Binding var text: String
 	@Binding var attributedText: NSMutableAttributedString
-	@State var allowsEditingTextAttributes: Bool = true
-	@State var font: UIFont?
+	@Binding var font: UIFont?
+	@Binding var fontColor: UIColor?
 	
-	init(text: Binding<String>, attributedText: Binding<NSMutableAttributedString>, allowsEditingTextAttributes: Bool, font: UIFont?) {
+	init(text: Binding<String>, attributedText: Binding<NSMutableAttributedString>, font: Binding<UIFont?>, fontColor: Binding<UIColor?>) {
 		self._text = text
 		self._attributedText = attributedText
+		self._font = font
+		self._fontColor = fontColor
 		self.attributedText.mutableString.setString($text.wrappedValue)
-		self.allowsEditingTextAttributes = allowsEditingTextAttributes
-		self.font = font
 	}
 
 	func makeUIView(context: Context) -> UITextView {
@@ -58,15 +85,15 @@ struct TextView: UIViewRepresentable {
 		view.isScrollEnabled = true
 		view.isEditable = true
 		view.isUserInteractionEnabled = true
-		view.font = UIFont.systemFont(ofSize: 32)
 		view.delegate = context.coordinator
 		return view
 	}
 
 	func updateUIView(_ uiView: UITextView, context: Context) {
 		uiView.attributedText = attributedText
-		uiView.allowsEditingTextAttributes = allowsEditingTextAttributes
+		uiView.allowsEditingTextAttributes = true
 		uiView.font = font
+		uiView.textColor = fontColor
 	}
 	
 	func makeCoordinator() -> Coordinator {
