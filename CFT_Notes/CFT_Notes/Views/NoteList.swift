@@ -22,6 +22,18 @@ struct NoteList: View {
 				.onDelete(perform: delete)
 			}
 			.navigationTitle("Notes")
+			.toolbar {
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button {
+						noteVM.add()
+						noteVM.save()
+					} label: {
+						Image(systemName: "square.and.pencil")
+							.font(.title2)
+					}
+					.padding(.horizontal)
+				 }
+			}
 		}
 		.onAppear {
 			notes = noteVM.notes
