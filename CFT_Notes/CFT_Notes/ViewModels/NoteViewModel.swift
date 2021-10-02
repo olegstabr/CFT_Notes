@@ -8,7 +8,10 @@
 import SwiftUI
 
 class NoteViewModel: ObservableObject {
-	@Published var noteModel: NoteModel = NoteModel(notes: [])
+	@Published var noteModel: NoteModel = NoteModel(notes: [
+		Note(id: 0, title: "ReadMe Note", description: "ReadMe", content: "1. Bottom toolbar - increase and decrease font size. \n2. Bold, italic, undeline - select text by tap and use standard Apple menu. \n3. Remove note - slide right in main menu with list of notes."),
+		Note(id: 1, title: "Note With Image", description: "Note With Image", content: "Default note with image. Only THIS note has an image.", withImage: true)
+	])
 	
 	var notes: [Note] {
 		noteModel.notes
@@ -24,8 +27,8 @@ class NoteViewModel: ObservableObject {
 		noteModel.setContent(note, content: content)
 	}
 	
-	func add() {
-		noteModel.add()
+	func add(withImage: Bool = false) {
+		noteModel.add(withImage)
 	}
 	
 	func remove(_ note: Note) {

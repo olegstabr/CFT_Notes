@@ -19,7 +19,7 @@ struct NoteModel {
 		}
 	}
 	
-	mutating func add() {
+	mutating func add(_ withImage: Bool = false) {
 		var maxNoteId = getLastIndex()
 		
 		if maxNoteId == -1 {
@@ -28,7 +28,7 @@ struct NoteModel {
 			maxNoteId += 1
 		}
 		
-		let note = Note(id: maxNoteId, title: "New note #\(maxNoteId)", description: "Empty description", content: "Enter note text here...")
+		let note = Note(id: maxNoteId, title: "New note #\(maxNoteId)", description: "Empty description #\(maxNoteId)", content: "Enter note text here...", withImage: withImage)
 		
 		notes.append(note)
 	}
@@ -89,7 +89,6 @@ struct NoteModel {
 			if let url = urls.first {
 				var fileURL = url.appendingPathComponent(filename)
 				fileURL = fileURL.appendingPathExtension("json")
-//				let data = try JSONSerialization.data(withJSONObject: notes, options: [.prettyPrinted])
 				let data = try encoder.encode(notes)
 				try data.write(to: fileURL, options: [.atomicWrite])
 				return true
@@ -108,4 +107,5 @@ struct Note: Identifiable, Equatable, Codable, Hashable {
 	var title: String
 	var description: String?
 	var content: String
+	var withImage: Bool = false
 }

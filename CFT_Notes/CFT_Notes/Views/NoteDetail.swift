@@ -6,20 +6,22 @@
 //
 
 import SwiftUI
+
 struct NoteDetail: View {
 	@Environment(\.presentationMode) var mode: Binding<PresentationMode>
 	
 	@State var content: String
+	var note: Note
+	
 	@State private var attributedText = NSMutableAttributedString(string: "")
 	@State private var font: UIFont? = .systemFont(ofSize: 32)
 	@State private var fontColor: UIColor? = .black
 	@State private var fontSize: CGFloat = 32
 	@EnvironmentObject var noteVM: NoteViewModel
 
-	var note: Note
     var body: some View {
 		VStack {
-			TextView(text: $content, attributedText: $attributedText, font: $font, fontColor: $fontColor)
+			TextView(text: $content, attributedText: $attributedText, font: $font, fontColor: $fontColor, isShowImage: note.withImage)
 				.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 				.padding(.horizontal)
 		}
@@ -37,12 +39,6 @@ struct NoteDetail: View {
 					font = .systemFont(ofSize: fontSize)
 				} label: {
 					Image(systemName: "textformat.size.smaller")
-						.font(.title)
-				}
-				Button {
-					fontColor = .red
-				} label: {
-					Image(systemName: "paintbrush")
 						.font(.title)
 				}
 				Spacer()
@@ -81,12 +77,14 @@ struct TextView: UIViewRepresentable {
 	@Binding var attributedText: NSMutableAttributedString
 	@Binding var font: UIFont?
 	@Binding var fontColor: UIColor?
+	var isShowImage: Bool
 	
-	init(text: Binding<String>, attributedText: Binding<NSMutableAttributedString>, font: Binding<UIFont?>, fontColor: Binding<UIColor?>) {
+	init(text: Binding<String>, attributedText: Binding<NSMutableAttributedString>, font: Binding<UIFont?>, fontColor: Binding<UIColor?>, isShowImage: Bool) {
 		self._text = text
 		self._attributedText = attributedText
 		self._font = font
 		self._fontColor = fontColor
+		self.isShowImage = isShowImage
 		self.attributedText.mutableString.setString($text.wrappedValue)
 	}
 
@@ -96,6 +94,12 @@ struct TextView: UIViewRepresentable {
 		view.isEditable = true
 		view.isUserInteractionEnabled = true
 		view.delegate = context.coordinator
+		
+		if isShowImage {
+			let imageString = getImageString()
+			attributedText.append(imageString)
+		}
+		
 		return view
 	}
 
@@ -104,6 +108,13 @@ struct TextView: UIViewRepresentable {
 		uiView.allowsEditingTextAttributes = true
 		uiView.font = font
 		uiView.textColor = fontColor
+	}
+	
+	func getImageString() -> NSAttributedString {
+		let image1Attachment = NSTextAttachment()
+		image1Attachment.image = UIImage(named: "programmer.png")
+		let image1String = NSAttributedString(attachment: image1Attachment)
+		return image1String
 	}
 	
 	func makeCoordinator() -> Coordinator {

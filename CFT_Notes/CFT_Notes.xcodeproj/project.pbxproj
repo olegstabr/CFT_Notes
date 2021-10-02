@@ -13,6 +13,7 @@
 		0C56BA6526FCA0D7003A11AD /* NoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56BA6426FCA0D7003A11AD /* NoteDetail.swift */; };
 		0C56BA6726FCAF8B003A11AD /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56BA6626FCAF8B003A11AD /* NoteViewModel.swift */; };
 		0C56BA6A26FCBC7B003A11AD /* notes_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C56BA6926FCBC7B003A11AD /* notes_data.json */; };
+		0CA37E5727087498002C04E9 /* programmer.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CA37E5627087498002C04E9 /* programmer.png */; };
 		0CAA4E1926FC9C4900BDA1A4 /* CFT_NotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA4E1826FC9C4900BDA1A4 /* CFT_NotesApp.swift */; };
 		0CAA4E1B26FC9C4900BDA1A4 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA4E1A26FC9C4900BDA1A4 /* MainAppView.swift */; };
 		0CAA4E1D26FC9C4A00BDA1A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CAA4E1C26FC9C4A00BDA1A4 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		0C56BA6426FCA0D7003A11AD /* NoteDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetail.swift; sourceTree = "<group>"; };
 		0C56BA6626FCAF8B003A11AD /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		0C56BA6926FCBC7B003A11AD /* notes_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = notes_data.json; sourceTree = "<group>"; };
+		0CA37E5627087498002C04E9 /* programmer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = programmer.png; sourceTree = "<group>"; };
 		0CAA4E1526FC9C4900BDA1A4 /* CFT_Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFT_Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CAA4E1826FC9C4900BDA1A4 /* CFT_NotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFT_NotesApp.swift; sourceTree = "<group>"; };
 		0CAA4E1A26FC9C4900BDA1A4 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				0C56BA6926FCBC7B003A11AD /* notes_data.json */,
+				0CA37E5627087498002C04E9 /* programmer.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -193,6 +196,8 @@
 			dependencies = (
 			);
 			name = CFT_Notes;
+			packageProductDependencies = (
+			);
 			productName = CFT_Notes;
 			productReference = 0CAA4E1526FC9C4900BDA1A4 /* CFT_Notes.app */;
 			productType = "com.apple.product-type.application";
@@ -265,6 +270,8 @@
 				Base,
 			);
 			mainGroup = 0CAA4E0C26FC9C4900BDA1A4;
+			packageReferences = (
+			);
 			productRefGroup = 0CAA4E1626FC9C4900BDA1A4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -282,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CAA4E2026FC9C4A00BDA1A4 /* Preview Assets.xcassets in Resources */,
+				0CA37E5727087498002C04E9 /* programmer.png in Resources */,
 				0CAA4E1D26FC9C4A00BDA1A4 /* Assets.xcassets in Resources */,
 				0C56BA6A26FCBC7B003A11AD /* notes_data.json in Resources */,
 			);
