@@ -7,6 +7,8 @@
 
 import SwiftUI
 struct NoteDetail: View {
+	@Environment(\.presentationMode) var mode: Binding<PresentationMode>
+	
 	@State var content: String
 	@State private var attributedText = NSMutableAttributedString(string: "")
 	@State private var font: UIFont? = .systemFont(ofSize: 32)
@@ -16,40 +18,48 @@ struct NoteDetail: View {
 
 	var note: Note
     var body: some View {
-		NavigationView {
-			VStack {
-				TextView(text: $content, attributedText: $attributedText, font: $font, fontColor: $fontColor)
-					.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-					.padding(.horizontal)
-			}
-			.toolbar(content: {
-				ToolbarItemGroup(placement: .bottomBar) {
-					Button {
-						fontSize += 2
-						font = .systemFont(ofSize: fontSize)
-					} label: {
-						Image(systemName: "textformat.size.larger")
-							.font(.title)
-					}
-					Button {
-						fontSize -= 2
-						font = .systemFont(ofSize: fontSize)
-					} label: {
-						Image(systemName: "textformat.size.smaller")
-							.font(.title)
-					}
-					Button {
-						fontColor = .red
-					} label: {
-						Image(systemName: "paintbrush")
-							.font(.title)
-					}
-					Spacer()
-				}
-			})
-			.foregroundColor(.primary)
-			.navigationTitle(note.title)
+		VStack {
+			TextView(text: $content, attributedText: $attributedText, font: $font, fontColor: $fontColor)
+				.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+				.padding(.horizontal)
 		}
+		.toolbar(content: {
+			ToolbarItemGroup(placement: .bottomBar) {
+				Button {
+					fontSize += 2
+					font = .systemFont(ofSize: fontSize)
+				} label: {
+					Image(systemName: "textformat.size.larger")
+						.font(.title)
+				}
+				Button {
+					fontSize -= 2
+					font = .systemFont(ofSize: fontSize)
+				} label: {
+					Image(systemName: "textformat.size.smaller")
+						.font(.title)
+				}
+				Button {
+					fontColor = .red
+				} label: {
+					Image(systemName: "paintbrush")
+						.font(.title)
+				}
+				Spacer()
+			}
+		})
+		.foregroundColor(.primary)
+		.navigationTitle(note.title)
+		.navigationBarBackButtonHidden(true)
+		.navigationBarItems(leading: Button(action : {
+			   self.mode.wrappedValue.dismiss()
+			   save()
+		   }){
+			   HStack {
+				   Image(systemName: "chevron.left")
+				   Text("Back").font(.body)
+			   }
+		   })
 		.onTapGesture {
 			hideKeyboardAndSave()
 		}
